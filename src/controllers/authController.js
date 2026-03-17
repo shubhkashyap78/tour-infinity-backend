@@ -88,4 +88,13 @@ const devResetPassword = async (req, res) => {
   }
 };
 
-module.exports = { seedAdmin, login, me, createUser, devResetPassword };
+const listUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password").sort({ createdAt: -1 });
+    return res.json(users);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { seedAdmin, login, me, createUser, devResetPassword, listUsers };

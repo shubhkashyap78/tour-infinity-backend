@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const morgan = require("morgan");
 const { connectDb } = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
@@ -16,6 +17,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json({ limit: "10mb" }));
+app.use(morgan("dev"));
 
 // Ensure DB connected on every request (Vercel serverless)
 app.use(async (req, res, next) => {
