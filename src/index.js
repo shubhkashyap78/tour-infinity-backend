@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const enquiryRoutes = require("./routes/enquiryRoutes");
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/enquiries", enquiryRoutes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
