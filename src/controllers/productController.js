@@ -39,7 +39,11 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body || {}, { new: true });
+    const product = await Product.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body || {} },
+      { new: true, runValidators: false }
+    );
     if (!product) return res.status(404).json({ message: "Not found" });
     return res.json(product);
   } catch (err) {
@@ -91,7 +95,7 @@ const listPublicProducts = async (req, res) => {
     const filter = { isActive: true, "inventory.stopSales": { $ne: true } };
     if (type) filter.type = type;
     if (q) filter.title = { $regex: q, $options: "i" };
-    const products = await Product.find(filter, "title type description tags media basePrice baseCurrency markets inventory").sort({ createdAt: -1 });
+    const products = await Product.find(filter, "title type description tags media basePrice baseCurrency markets inventory childPricing transferPricing vehicleCapacity vehicleModel hasAC luggageCapacity").sort({ createdAt: -1 });
     return res.json(products);
   } catch (err) {
     return res.status(500).json({ message: err.message });

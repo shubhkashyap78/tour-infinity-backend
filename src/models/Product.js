@@ -48,8 +48,26 @@ const productSchema = new mongoose.Schema(
     markets: [marketPriceSchema],
     localized: [localizedSchema],
     isActive: { type: Boolean, default: true },
+    // vehicle-specific
+    vehicleCapacity: { type: Number, default: 4 },
+    vehicleModel: { type: String, default: "" },
+    hasAC: { type: Boolean, default: true },
+    luggageCapacity: { type: Number, default: 2 },
+    transferPricing: {
+      airportOneWay:  { type: Number, default: 0 },
+      airportTwoWay:  { type: Number, default: 0 },
+      hotelTransfer:  { type: Number, default: 0 },
+      fullDay4hrs:    { type: Number, default: 0 },
+      fullDay8hrs:    { type: Number, default: 0 },
+    },
+    // tour-specific
+    childPricing: {
+      infantPrice: { type: Number, default: 0 },
+      childPrice:  { type: Number, default: 0 },
+      adultPrice:  { type: Number, default: 0 },
+    },
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = mongoose.model("Product", productSchema);
