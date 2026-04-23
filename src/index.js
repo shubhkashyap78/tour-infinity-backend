@@ -18,6 +18,7 @@ const app = express();
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   "https://69e9bfa6caca131dcfc4526b--darling-rabanadas-b2a9ab.netlify.app", // Netlify deployment
+  "https://69e9c76def79f53792c427f3--darling-rabanadas-b2a9ab.netlify.app", // Updated Netlify URL
   "http://localhost:5173", // Vite dev server
   "http://localhost:4173", // Vite preview
   "http://localhost:3000", // React dev server
