@@ -17,8 +17,10 @@ const app = express();
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "http://localhost:5173",
-  "http://localhost:4173",
+  "https://69e9bfa6caca131dcfc4526b--darling-rabanadas-b2a9ab.netlify.app", // Netlify deployment
+  "http://localhost:5173", // Vite dev server
+  "http://localhost:4173", // Vite preview
+  "http://localhost:3000", // React dev server
 ].filter(Boolean);
 
 app.use(cors({
