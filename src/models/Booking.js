@@ -3,6 +3,14 @@ const mongoose = require("mongoose");
 const bookingSchema = new mongoose.Schema(
   {
     bookingRef: { type: String, unique: true },
+    
+    // Quotation reference
+    quotationId: { type: mongoose.Schema.Types.ObjectId, ref: "Quotation" },
+    quotationRef: { type: String },
+    
+    // Lead reference
+    leadId: { type: mongoose.Schema.Types.ObjectId, ref: "Lead" },
+    
     product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
     productType: { type: String, enum: ["hotel", "tour", "package", "vehicle"], required: true },
     customerName: { type: String, required: true, trim: true },
@@ -12,7 +20,7 @@ const bookingSchema = new mongoose.Schema(
     checkIn: { type: Date },
     checkOut: { type: Date },
     totalAmount: { type: Number, required: true },
-    currency: { type: String, default: "USD" },
+    currency: { type: String, default: "INR" },
     status: {
       type: String,
       enum: ["pending", "confirmed", "cancelled", "completed"],
@@ -24,6 +32,9 @@ const bookingSchema = new mongoose.Schema(
       default: "unpaid",
     },
     notes: { type: String, default: "" },
+    
+    // Created by admin
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   },
   { timestamps: true }
 );

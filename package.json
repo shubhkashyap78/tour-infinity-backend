@@ -1,7 +1,7 @@
 {
-  "name": "eastcape-booking-backend",
+  "name": "andamantourinfinity-backend",
   "version": "0.1.0",
-  "description": "Eastcape Booking CRM backend (MERN)",
+  "description": " CRM backend (MERN)",
   "main": "src/index.js",
   "scripts": {
     "dev": "node src/index.js",

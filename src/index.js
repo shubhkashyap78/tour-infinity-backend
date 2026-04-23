@@ -10,11 +10,22 @@ const productRoutes = require("./routes/productRoutes");
 const newsletterRoutes = require("./routes/newsletterRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const enquiryRoutes = require("./routes/enquiryRoutes");
+const leadRoutes = require("./routes/leadRoutes");
+const quotationRoutes = require("./routes/quotationRoutes");
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:4173",
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "*",
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    cb(new Error("Not allowed by CORS"));
+  },
   credentials: true,
 }));
 app.use(express.json({ limit: "25mb" }));
@@ -27,7 +38,7 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ status: "ok", service: "Eastcape Booking API" });
+  res.json({ status: "ok", service: "Andaman Tour Infinity API" });
 });
 
 app.get("/health", async (req, res) => {
@@ -46,13 +57,17 @@ app.use("/api/products", productRoutes);
 app.use("/api/newsletter", newsletterRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/enquiries", enquiryRoutes);
+app.use("/api/leads", leadRoutes);
+app.use("/api/quotations", quotationRoutes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || "Internal server error" });
 });
 
-// Connect DB once (Vercel serverless — no app.listen)
-connectDb();
+const PORT = process.env.PORT || 5001;
+connectDb().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
 
 module.exports = app;
