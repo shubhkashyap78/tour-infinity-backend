@@ -11,8 +11,8 @@ const bookingSchema = new mongoose.Schema(
     // Lead reference
     leadId: { type: mongoose.Schema.Types.ObjectId, ref: "Lead" },
     
-    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
-    productType: { type: String, enum: ["hotel", "tour", "package", "vehicle"], required: true },
+    product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    productType: { type: String, enum: ["hotel", "tour", "package", "vehicle", "other"] },
     customerName: { type: String, required: true, trim: true },
     customerEmail: { type: String, required: true, lowercase: true, trim: true },
     customerPhone: { type: String, default: "" },

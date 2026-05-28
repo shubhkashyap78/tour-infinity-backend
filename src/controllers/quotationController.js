@@ -374,7 +374,7 @@ const convertQuotationToBooking = async (req, res) => {
       return res.status(404).json({ message: "Quotation not found" });
     }
     
-    if (quotation.status === "Accepted") {
+    if (quotation.convertedBookingId) {
       return res.status(400).json({ message: "Quotation already converted to booking" });
     }
     
@@ -394,14 +394,17 @@ const convertQuotationToBooking = async (req, res) => {
       notes: `Converted from quotation ${quotation.quotationRef}`
     };
     
-    // For now, create a single booking with the main package/service
+    // Map items to booking
     if (quotation.items.length > 0) {
       const mainItem = quotation.items[0];
-      bookingData.product = mainItem.productId?._id;
-      bookingData.productType = mainItem.type;
-      bookingData.guests = quotation.groupSize.adults + quotation.groupSize.children;
-      bookingData.checkIn = quotation.travelDates.startDate;
-      bookingData.checkOut = quotation.travelDates.endDate;
+      if (mainItem.productId?._id) bookingData.product = mainItem.productId._id;
+      bookingData.productType = mainItem.type || "package";
+      bookingData.guests = (quotation.groupSize?.adults || 1) + (quotation.groupSize?.children || 0);
+      bookingData.checkIn = quotation.travelDates?.startDate;
+      bookingData.checkOut = quotation.travelDates?.endDate;
+    } else {
+      bookingData.productType = "package";
+      bookingData.guests = (quotation.groupSize?.adults || 1) + (quotation.groupSize?.children || 0);
     }
     
     const booking = new Booking(bookingData);
