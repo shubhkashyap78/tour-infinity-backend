@@ -45,7 +45,12 @@ const quotationItemSchema = new mongoose.Schema({
   // Additional details
   inclusions: [String],
   exclusions: [String],
-  notes: String
+  notes: String,
+  image: String,
+  mealPlan: String,
+  roomType: String,
+  vehicleType: String,
+  route: String
 });
 
 const quotationSchema = new mongoose.Schema({

@@ -42,7 +42,7 @@ app.use(async (req, res, next) => {
 });
 
 app.get("/", (req, res) => {
-  res.json({ status: "ok", service: "Andaman Tour Infinity API" });
+  res.json({ status: "ok", service: "Andaman Destinations API" });
 });
 
 app.get("/health", async (req, res) => {

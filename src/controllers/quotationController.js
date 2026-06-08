@@ -162,15 +162,12 @@ const addQuotationItem = async (req, res) => {
     if (itemData.productId) {
       const product = await Product.findById(itemData.productId);
       if (product) {
-        itemData.name = product.name || product.title || 'Unnamed Product';
-        itemData.description = product.description || '';
-        // Handle both pricing structures
+        // Only fill fields not already provided by frontend
+        if (!itemData.name) itemData.name = product.name || product.title || 'Unnamed Product';
+        if (!itemData.description) itemData.description = product.description || '';
         itemData.basePrice = product.pricing?.base || product.basePrice || 0;
-        itemData.inclusions = product.inclusions || [];
-        itemData.exclusions = product.exclusions || [];
-        console.log('Product found:', product.name || product.title, 'Price:', itemData.basePrice);
-      } else {
-        console.log('Product not found for ID:', itemData.productId);
+        if (!itemData.inclusions?.length) itemData.inclusions = product.inclusions || [];
+        if (!itemData.exclusions?.length) itemData.exclusions = product.exclusions || [];
       }
     }
     
