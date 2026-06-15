@@ -50,7 +50,8 @@ const quotationItemSchema = new mongoose.Schema({
   mealPlan: String,
   roomType: String,
   vehicleType: String,
-  route: String
+  route: String,
+  days: { type: mongoose.Schema.Types.Mixed, default: [] }
 });
 
 const quotationSchema = new mongoose.Schema({

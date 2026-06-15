@@ -12,6 +12,7 @@ const bookingRoutes = require("./routes/bookingRoutes");
 const enquiryRoutes = require("./routes/enquiryRoutes");
 const leadRoutes = require("./routes/leadRoutes");
 const quotationRoutes = require("./routes/quotationRoutes");
+const inclusionExclusionRoutes = require("./routes/inclusionExclusionRoutes");
 
 const app = express();
 
@@ -63,6 +64,7 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/leads", leadRoutes);
 app.use("/api/quotations", quotationRoutes);
+app.use("/api/inclusions-exclusions", inclusionExclusionRoutes);
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
